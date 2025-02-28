@@ -3,11 +3,10 @@
 ## 新增功能：
 - CodeMirror 提供的代码高亮
 - 日志倒序
+- dae 核心版本总是最新
 
 ## 编译
 ```
-rm -rf package/feeds/packages/duck
 git clone https://github.com/JohnsonRan/InfinityDuck package/new/InfinityDuck
 make package/new/InfinityDuck/luci-app-duck/compile
 ```
-
