@@ -87,19 +87,25 @@ return view.extend({
 		var scrollDownButton = E('button', {
 				'id': 'scrollDownButton',
 				'class': 'cbi-button cbi-button-neutral',
-			}, _('Scroll to head', 'scroll to top (the head) of the log file')
+			}, _('Scroll to tail', 'scroll to bottom (the tail) of the log file')
 		);
 		scrollDownButton.addEventListener('click', function() {
-			scrollUpButton.focus();
+			var logContainer = document.getElementById('log_textarea');
+			if (logContainer) {
+				logContainer.scrollTop = logContainer.scrollHeight;
+			}
 		});
 
 		var scrollUpButton = E('button', {
 				'id' : 'scrollUpButton',
 				'class': 'cbi-button cbi-button-neutral',
-			}, _('Scroll to tail', 'scroll to bottom (the tail) of the log file')
+			}, _('Scroll to head', 'scroll to top (the head) of the log file')
 		);
 		scrollUpButton.addEventListener('click', function() {
-			scrollDownButton.focus();
+			var logContainer = document.getElementById('log_textarea');
+			if (logContainer) {
+				logContainer.scrollTop = 0;
+			}
 		});
 
 		return E([
