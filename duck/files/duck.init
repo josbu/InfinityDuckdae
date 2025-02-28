@@ -6,9 +6,9 @@ START=99
 
 extra_command "hot_reload" "Hot-reload service"
 
-CONF="dae"
+CONF="duck"
 PROG="/usr/bin/dae"
-LOG_DIR="/var/log/dae"
+LOG_DIR="/var/log/duck"
 
 start_service() {
 	config_load "$CONF"
@@ -18,7 +18,7 @@ start_service() {
 	[ "$enabled" -eq "1" ] || return 1
 
 	local config_file
-	config_get config_file "config" "config_file" "/etc/dae/config.dae"
+	config_get config_file "config" "config_file" "/etc/duck/config.dae"
 
 	"$PROG" validate -c "$config_file" || return 1
 
@@ -30,7 +30,7 @@ start_service() {
 	procd_set_param command "$PROG" run
 	procd_append_param command --config "$config_file"
 	procd_append_param command --disable-timestamp
-	procd_append_param command --logfile "$LOG_DIR/dae.log"
+	procd_append_param command --logfile "$LOG_DIR/duck.log"
 	procd_append_param command --logfile-maxbackups "$log_maxbackups"
 	procd_append_param command --logfile-maxsize "$log_maxsize"
 
@@ -52,5 +52,5 @@ service_triggers() {
 }
 
 hot_reload() {
-	/etc/init.d/dae running && "$PROG" reload "$(cat /var/run/dae.pid)"
+	/etc/init.d/duck running && "$PROG" reload "$(cat /var/run/duck.pid)"
 }

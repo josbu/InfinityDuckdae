@@ -4,7 +4,7 @@
 
 include $(TOPDIR)/rules.mk
 
-PKG_NAME:=dae
+PKG_NAME:=duck
 PKG_VERSION:=2025.02.21
 PKG_RELEASE:=1
 
@@ -15,7 +15,7 @@ PKG_MIRROR_HASH:=skip
 
 PKG_LICENSE:=AGPL-3.0-only
 PKG_LICENSE_FILE:=LICENSE
-PKG_MAINTAINER:=Tianling Shen <cnsztl@immortalwrt.org>
+PKG_MAINTAINER:=JohnsonRan <me@ihtw.moe>
 
 PKG_BUILD_DEPENDS:=golang/host bpf-headers
 PKG_BUILD_PARALLEL:=1
@@ -34,15 +34,15 @@ include $(TOPDIR)/feeds/packages/lang/golang/golang-package.mk
 
 UNZIP_CMD:=unzip -q -d $(PKG_BUILD_DIR) $(DL_DIR)/$(PKG_SOURCE)
 
-define Package/dae/Default
+define Package/duck/Default
   SECTION:=net
   CATEGORY:=Network
   SUBMENU:=Web Servers/Proxies
-  URL:=https://github.com/daeuniverse/dae
+  URL:=https://github.com/duckuniverse/duck
 endef
 
-define Package/dae
-  $(call Package/dae/Default)
+define Package/duck
+  $(call Package/duck/Default)
   TITLE:=A lightweight and high-performance transparent proxy solution
   # You need enable KERNEL_DEBUG_INFO_BTF and KERNEL_BPF_EVENTS
   DEPENDS:=$(GO_ARCH_DEPENDS) $(BPF_DEPENDS)  \
@@ -50,21 +50,21 @@ define Package/dae
     +kmod-veth
 endef
 
-define Package/dae-geoip
-  $(call Package/dae/Default)
-  TITLE:=geoip for dae
-  DEPENDS:=+dae +v2ray-geoip
+define Package/duck-geoip
+  $(call Package/duck/Default)
+  TITLE:=geoip for duck
+  DEPENDS:=+duck +v2ray-geoip
   PKGARCH:=all
 endef
 
-define Package/dae-geosite
-  $(call Package/dae/Default)
-  TITLE:=geosite for dae
-  DEPENDS:=+dae +v2ray-geosite
+define Package/duck-geosite
+  $(call Package/duck/Default)
+  TITLE:=geosite for duck
+  DEPENDS:=+duck +v2ray-geosite
   PKGARCH:=all
 endef
 
-define Package/dae/description
+define Package/duck/description
   dae, means goose, is a lightweight and high-performance transparent
   proxy solution.
 
@@ -76,12 +76,12 @@ define Package/dae/description
   loss and additional resource consumption for direct traffic.
 endef
 
-define Package/dae/conffiles
-/etc/dae/config.dae
-/etc/config/dae
+define Package/duck/conffiles
+/etc/duck/config.dae
+/etc/config/duck
 endef
 
-DAE_CFLAGS:= \
+duck_CFLAGS:= \
 	-O2 -Wall -Werror \
 	-DMAX_MATCH_SET_LEN=1024 \
 	-I$(BPF_HEADERS_DIR)/tools/lib \
@@ -95,7 +95,7 @@ define Build/Compile
 		$(GO_PKG_BUILD_VARS) \
 		BPF_CLANG="$(CLANG)" \
 		BPF_STRIP_FLAG="-strip=$(LLVM_STRIP)" \
-		BPF_CFLAGS="$(DAE_CFLAGS)" \
+		BPF_CFLAGS="$(duck_CFLAGS)" \
 		BPF_TARGET="bpfel,bpfeb" \
 		BPF_TRACE_TARGET="$(GO_ARCH)" ; \
 		go generate $(PKG_BUILD_DIR)/control/control.go ; \
@@ -104,30 +104,30 @@ define Build/Compile
 	)
 endef
 
-define Package/dae/install
+define Package/duck/install
 	$(call GoPackage/Package/Install/Bin,$(1))
 
-	$(INSTALL_DIR) $(1)/etc/dae/
-	$(INSTALL_CONF) $(PKG_BUILD_DIR)/example.dae $(1)/etc/dae/
+	$(INSTALL_DIR) $(1)/etc/duck/
+	$(INSTALL_CONF) $(PKG_BUILD_DIR)/example.dae $(1)/etc/duck/
 
 	$(INSTALL_DIR) $(1)/etc/config
-	$(INSTALL_CONF) $(CURDIR)/files/dae.config $(1)/etc/config/dae
+	$(INSTALL_CONF) $(CURDIR)/files/duck.config $(1)/etc/config/duck
 
 	$(INSTALL_DIR) $(1)/etc/init.d
-	$(INSTALL_BIN) $(CURDIR)/files/dae.init $(1)/etc/init.d/dae
+	$(INSTALL_BIN) $(CURDIR)/files/duck.init $(1)/etc/init.d/duck
 endef
 
-define Package/dae-geoip/install
+define Package/duck-geoip/install
 	$(INSTALL_DIR) $(1)/usr/share/dae
 	$(LN) ../v2ray/geoip.dat $(1)/usr/share/dae/geoip.dat
 endef
 
-define Package/dae-geosite/install
+define Package/duck-geosite/install
 	$(INSTALL_DIR) $(1)/usr/share/dae
 	$(LN) ../v2ray/geosite.dat $(1)/usr/share/dae/geosite.dat
 endef
 
-$(eval $(call GoBinPackage,dae))
-$(eval $(call BuildPackage,dae))
-$(eval $(call BuildPackage,dae-geoip))
-$(eval $(call BuildPackage,dae-geosite))
+$(eval $(call GoBinPackage,duck))
+$(eval $(call BuildPackage,duck))
+$(eval $(call BuildPackage,duck-geoip))
+$(eval $(call BuildPackage,duck-geosite))

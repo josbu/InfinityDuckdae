@@ -31,7 +31,7 @@ return view.extend({
 		);
 
 		poll.add(L.bind(function() {
-			return fs.read_direct('/var/log/dae/dae.log', 'text')
+			return fs.read_direct('/var/log/duck/duck.log', 'text')
 			.then(function(content) {
 				var contentLines = content.trim().split(/\r?\n/);
 				var reversedContent = contentLines.reverse().join('\n');

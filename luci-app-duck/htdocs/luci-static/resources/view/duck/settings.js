@@ -15,10 +15,10 @@ var callServiceList = rpc.declare({
 });
 
 function getServiceStatus() {
-	return L.resolveDefault(callServiceList('dae'), {}).then(function (res) {
+	return L.resolveDefault(callServiceList('duck'), {}).then(function (res) {
 		var isRunning = false;
 		try {
-			isRunning = res['dae']['instances']['dae']['running'];
+			isRunning = res['duck']['instances']['duck']['running'];
 		} catch (e) { }
 		return isRunning;
 	});
@@ -28,9 +28,9 @@ function renderStatus(isRunning) {
 	var spanTemp = '<span style="color:%s"><strong>%s %s</strong></span>';
 	var renderHTML;
 	if (isRunning) {
-		renderHTML = spanTemp.format('green', _('dae'), _('RUNNING'));
+		renderHTML = spanTemp.format('green', _('InfinityDuck'), _('RUNNING'));
 	} else {
-		renderHTML = spanTemp.format('red', _('dae'), _('NOT RUNNING'));
+		renderHTML = spanTemp.format('red', _('InfinityDuck'), _('NOT RUNNING'));
 	}
 
 	return renderHTML;
@@ -39,14 +39,14 @@ function renderStatus(isRunning) {
 return view.extend({
 	load: function() {
 		return Promise.all([
-			uci.load('dae')
+			uci.load('duck')
 		]);
 	},
 
 	render: function(data) {
 		var m, s, o;
 
-		m = new form.Map('dae', _('dae'),
+		m = new form.Map('duck', _('InfinityDuck'),
 			_('eBPF-based Linux high-performance transparent proxy solution.'));
 
 		s = m.section(form.TypedSection);
@@ -64,12 +64,12 @@ return view.extend({
 			]);
 		}
 
-		s = m.section(form.NamedSection, 'config', 'dae');
+		s = m.section(form.NamedSection, 'config', 'duck');
 
 		o = s.option(form.Flag, 'enabled', _('Enable'));
 
 		o = s.option(form.Value, 'config_file', _('Configration file'));
-		o.default = '/etc/dae/config.dae';
+		o.default = '/etc/duck/config.dae';
 		o.rmempty = false;
 		o.readonly = true;
 

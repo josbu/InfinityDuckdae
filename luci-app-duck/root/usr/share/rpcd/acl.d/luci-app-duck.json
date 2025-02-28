@@ -1,0 +1,23 @@
+{
+	"luci-app-duck": {
+		"description": "Grant access to InfinityDuck configuration",
+		"read": {
+			"file": {
+				"/etc/duck/config.dae": [ "read" ],
+				"/etc/duck/example.duck": [ "read" ],
+				"/var/log/duck/duck.log": [ "read" ],
+				"/etc/init.d/duck hot_reload": [ "exec" ]
+			},
+			"ubus": {
+				"service": [ "list" ]
+			},
+			"uci": [ "duck" ]
+		},
+		"write": {
+			"file": {
+				"/etc/duck/config.dae": [ "write" ]
+			},
+			"uci": [ "duck" ]
+		}
+	}
+}

@@ -18,7 +18,7 @@ var callFileWrite = rpc.declare({
 
 return view.extend({
 	handleSaveApply: function(ev, mode) {
-		var value = document.getElementById('cbid_dae_config__configuration').value;
+		var value = document.getElementById('cbid_duck_config__configuration').value;
 		
 		if (!value) {
 			ui.addNotification(null, E('p', _('Configuration cannot be empty!')), 'error');
@@ -31,8 +31,8 @@ return view.extend({
 			return Promise.reject(new Error('Invalid configuration'));
 		}
 		
-		return callFileWrite('/etc/dae/config.dae', value).then(function() {
-			return L.resolveDefault(fs.exec_direct('/etc/init.d/dae', ['hot_reload']), null).then(function() {
+		return callFileWrite('/etc/duck/config.dae', value).then(function() {
+			return L.resolveDefault(fs.exec_direct('/etc/init.d/duck', ['hot_reload']), null).then(function() {
 			});
 		}).catch(function(e) {
 			ui.addNotification(null, E('p', _('Failed to save configuration: %s').format(e.message)));
@@ -57,12 +57,12 @@ return view.extend({
 	},
 
 	load: function() {
-		return fs.read_direct('/etc/dae/config.dae', 'text')
+		return fs.read_direct('/etc/duck/config.dae', 'text')
 			.then(function(content) {
 				return content ?? '';
 			}).catch(function(e) {
 				if (e.toString().includes('NotFoundError'))
-					return fs.read_direct('/etc/dae/example.dae', 'text')
+					return fs.read_direct('/etc/duck/example.duck', 'text')
 						.then(function(content) {
 							return content ?? '';
 						}).catch(function(e) {
@@ -103,13 +103,13 @@ return view.extend({
 		var scriptDiv = E('div');
 		var hiddenInput = E('input', {
 			type: 'hidden',
-			id: 'cbid_dae_config__configuration',
-			name: 'cbid.dae.config._configuration',
+			id: 'cbid_duck_config__configuration',
+			name: 'cbid.duck.config._configuration',
 			value: content
 		});
 
-		m = new form.Map('dae', _('Configuration'),
-			_('Here you can edit dae configuration. It will be hot-reloaded automatically after apply.'));
+		m = new form.Map('duck', _('Configuration'),
+			_('Here you can edit duck configuration. It will be hot-reloaded automatically after apply.'));
 
 			// 监听表单提交
 		m.onValidate = function(map, data) {
@@ -166,8 +166,8 @@ return view.extend({
 			scriptDiv.appendChild(cmScript);
 			
 			cmScript.onload = function() {
-				 // 为dae语言定义简单的语法高亮
-				CodeMirror.defineMode("dae", function() {
+				 // 为duck语言定义简单的语法高亮
+				CodeMirror.defineMode("duck", function() {
 					return {
 						token: function(stream, state) {
 							// 处理注释
@@ -222,7 +222,7 @@ return view.extend({
 				// 初始化编辑器
 				editorInstance = CodeMirror(document.getElementById('code_editor'), {
 					value: content,
-					mode: "dae",
+					mode: "duck",
 					lineNumbers: true,
 					indentUnit: 4,
 					tabSize: 4,
@@ -240,8 +240,8 @@ return view.extend({
 				// 编辑器内容变更时更新隐藏输入
 				editorInstance.on('change', function() {
 					hiddenInput.value = editorInstance.getValue();
-					document.getElementById('cbid_dae_config__configuration').value = editorInstance.getValue();
-					self.formvalue.cbid_dae_config__configuration = editorInstance.getValue();
+					document.getElementById('cbid_duck_config__configuration').value = editorInstance.getValue();
+					self.formvalue.cbid_duck_config__configuration = editorInstance.getValue();
 				});
 			};
 		}, 100);

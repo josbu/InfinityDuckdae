@@ -1,39 +1,39 @@
 {
-	"admin/services/dae": {
-		"title": "dae",
+	"admin/services/duck": {
+		"title": "InfinityDuck",
 		"action": {
 			"type": "firstchild"
 		},
 		"depends": {
-			"acl": [ "luci-app-dae" ],
+			"acl": [ "luci-app-duck" ],
 			"fs": {
-				"/etc/init.d/dae": "executable"
+				"/etc/init.d/duck": "executable"
 			},
-			"uci": { "dae": true }
+			"uci": { "duck": true }
 		}
 	},
-	"admin/services/dae/settings": {
+	"admin/services/duck/settings": {
 		"title": "Settings",
 		"order": 10,
 		"action": {
 			"type": "view",
-			"path": "dae/settings"
+			"path": "duck/settings"
 		}
 	},
-	"admin/services/dae/config": {
+	"admin/services/duck/config": {
 		"title": "Configuration",
 		"order": 20,
 		"action": {
 			"type": "view",
-			"path": "dae/config"
+			"path": "duck/config"
 		}
 	},
-	"admin/services/dae/log": {
+	"admin/services/duck/log": {
 		"title": "Log",
 		"order": 30,
 		"action": {
 			"type": "view",
-			"path": "dae/log"
+			"path": "duck/log"
 		}
 	}
 }
