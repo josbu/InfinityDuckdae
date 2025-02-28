@@ -10,3 +10,9 @@
 git clone https://github.com/JohnsonRan/InfinityDuck package/new/InfinityDuck
 make package/new/InfinityDuck/luci-app-duck/compile
 ```
+
+## 感谢
+- [Percy Ma](https://marketplace.visualstudio.com/items?itemName=kecrily.dae)
+- [Tianling Shen](https://github.com/1715173329)
+- Claude 3.7 Sonnet  
+more...
