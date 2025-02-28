@@ -138,27 +138,22 @@ return view.extend({
 		window.setTimeout(function() {
 			// 加载CodeMirror主脚本
 			var cmScript = document.createElement('script');
-			cmScript.src = "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/codemirror.min.js";
-			cmScript.crossOrigin = "anonymous";
-			cmScript.referrerPolicy = "no-referrer";
+			cmScript.src = "/luci-static/resources/codemirror/codemirror.min.js";
 			
 			// 加载CodeMirror样式
 			var cmStyle = document.createElement('link');
 			cmStyle.rel = "stylesheet";
-			cmStyle.href = "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/codemirror.min.css";
-			cmStyle.crossOrigin = "anonymous";
+			cmStyle.href = "/luci-static/resources/codemirror/codemirror.min.css";
 			
 			// 加载亮色主题
 			var lightThemeStyle = document.createElement('link');
 			lightThemeStyle.rel = "stylesheet";
-			lightThemeStyle.href = "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/theme/eclipse.min.css";
-			lightThemeStyle.crossOrigin = "anonymous";
+			lightThemeStyle.href = "/luci-static/resources/codemirror/theme/eclipse.min.css";
 			
 			// 加载深色主题
 			var darkThemeStyle = document.createElement('link');
 			darkThemeStyle.rel = "stylesheet";
-			darkThemeStyle.href = "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/theme/dracula.min.css";
-			darkThemeStyle.crossOrigin = "anonymous";
+			darkThemeStyle.href = "/luci-static/resources/codemirror/theme/dracula.min.css";
 			
 			document.head.appendChild(cmStyle);
 			document.head.appendChild(lightThemeStyle);
