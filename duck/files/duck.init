@@ -52,5 +52,5 @@ service_triggers() {
 }
 
 hot_reload() {
-	/etc/init.d/duck running && "$PROG" reload "$(cat /var/run/duck.pid)"
+	/etc/init.d/duck running && "$PROG" reload "$(cat /var/run/dae.pid)"
 }
