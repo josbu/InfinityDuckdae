@@ -11,7 +11,10 @@ return view.extend({
 		/* Thanks to luci-app-aria2 */
 		var css = '					\
 			#log_textarea {				\
-				text-align: left;		\
+				text-align: left;			\
+				max-height: 70vh;		\
+				overflow-y: auto;			\
+				color-scheme: light dark;	\
 			}					\
 			#log_textarea pre {			\
 				padding: .5rem;			\
@@ -20,6 +23,30 @@ return view.extend({
 			}					\
 			.description {				\
 				background-color: #33ccff;	\
+				}					\
+			#log_textarea::-webkit-scrollbar {	\
+				width: 8px;			\
+			}					\
+			#log_textarea::-webkit-scrollbar-track {\
+				background: rgba(0, 0, 0, 0.05);	\
+			}					\
+			#log_textarea::-webkit-scrollbar-thumb {\
+				background: rgba(0, 0, 0, 0.2);	\
+				border-radius: 4px;		\
+			}					\
+			#log_textarea::-webkit-scrollbar-thumb:hover {\
+				background: rgba(0, 0, 0, 0.3);	\
+			}					\
+			@media (prefers-color-scheme: dark) {	\
+				#log_textarea::-webkit-scrollbar-track {\
+					background: rgba(255, 255, 255, 0.05);\
+				}				\
+				#log_textarea::-webkit-scrollbar-thumb {\
+					background: rgba(255, 255, 255, 0.2);\
+				}				\
+				#log_textarea::-webkit-scrollbar-thumb:hover {\
+					background: rgba(255, 255, 255, 0.3);\
+				}				\
 			}';
 
 		var log_textarea = E('div', { 'id': 'log_textarea' },
