@@ -32,9 +32,9 @@ msgstr "授予访问 duck 配置的权限"
 
 #: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/config.js:14
 msgid ""
-"Here you can edit duck configuration. It will be hot-reloaded automatically "
+"Here you can edit dae configuration. It will be hot-reloaded automatically "
 "after apply."
-msgstr "您可以在此处修改 duck 配置文件。应用后会自动热重载。"
+msgstr "您可以在此处修改 dae 配置文件。应用后会自动热重载。"
 
 #: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:28
 msgid "Loading..."

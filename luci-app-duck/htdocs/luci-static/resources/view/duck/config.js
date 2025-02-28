@@ -109,7 +109,7 @@ return view.extend({
 		});
 
 		m = new form.Map('duck', _('Configuration'),
-			_('Here you can edit duck configuration. It will be hot-reloaded automatically after apply.'));
+			_('Here you can edit dae configuration. It will be hot-reloaded automatically after apply.'));
 
 			// 监听表单提交
 		m.onValidate = function(map, data) {
