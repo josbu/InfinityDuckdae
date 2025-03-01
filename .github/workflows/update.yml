@@ -29,12 +29,12 @@ jobs:
       id: update
       run: |
         # 保存当前commit hash用于比较
-        old_hash=$(grep "PKG_SOURCE_VERSION:=" Makefile | cut -d'=' -f2)
+        old_hash=$(grep "PKG_SOURCE_VERSION:=" duck/Makefile | cut -d'=' -f2)
         # 更新版本号和commit hash
         sed -i "s/PKG_VERSION:=.*/PKG_VERSION:=${today}/" duck/Makefile
         sed -i "s/PKG_SOURCE_VERSION:=.*/PKG_SOURCE_VERSION:=${commit_hash}/" duck/Makefile
         
-        new_hash=$(grep "PKG_SOURCE_VERSION:=" Makefile | cut -d'=' -f2)
+        new_hash=$(grep "PKG_SOURCE_VERSION:=" duck/Makefile | cut -d'=' -f2)
         if [ "$old_hash" != "$new_hash" ]; then
           echo "has_changes=true" >> $GITHUB_OUTPUT
         else
@@ -49,8 +49,8 @@ jobs:
       run: |
         git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git config --global user.name "github-actions[bot]"
-        git add Makefile
-        git commit -m "duck: Update to ${today} (${commit_hash:0:7})"
+        git add duck/Makefile
+        git commit -m "dae: Update to ${today} (${commit_hash:0:7})"
         git push
       env:
         today: ${{ steps.version.outputs.today }}
