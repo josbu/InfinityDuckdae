@@ -8,11 +8,28 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:262
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:238
+msgid "Are you sure you want to clear the log file?"
+msgstr "你确定要清空日志吗？"
+
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:243
+msgid "Cancel"
+msgstr "取消"
+
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:265
+msgid "Clear"
+msgstr "清空"
+
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:297
 msgid "Clear Filter"
 msgstr "清除过滤"
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:108
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:237
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:303
+msgid "Clear Log"
+msgstr "清空日志"
+
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:109
 #: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:63
 msgid "Collecting data…"
 msgstr "正在收集数据中…"
@@ -38,11 +55,19 @@ msgstr "配置文件验证失败"
 msgid "Enable"
 msgstr "启用"
 
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:262
+msgid "Error"
+msgstr ""
+
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:262
+msgid "Failed to clear log file: %s"
+msgstr "清空日志失败: %s"
+
 #: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/config.js:40
 msgid "Failed to save configuration: %s"
 msgstr "保存配置文件失败: %s"
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:268
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:310
 msgid "Filter logs..."
 msgstr "过滤日志..."
 
@@ -63,21 +88,26 @@ msgstr "您可以在此处修改 dae 配置文件。应用后会自动热重载�
 msgid "InfinityDuck"
 msgstr ""
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:106
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:107
 msgid "Loading..."
 msgstr "加载中..."
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:288
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:330
 #: applications/luci-app-duck/root/usr/share/luci/menu.d/luci-app-duck.json:32
 msgid "Log"
 msgstr "日志"
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:178
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:179
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:256
 msgid "Log file does not exist."
 msgstr "日志文件不存在。"
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:165
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:212
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:251
+msgid "Log file has been cleared."
+msgstr "日志已清空"
+
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:166
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:213
 msgid "Log is empty."
 msgstr "日志为空"
 
@@ -97,16 +127,16 @@ msgstr "未运行"
 msgid "RUNNING"
 msgstr "运行中"
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:299
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:342
 msgid "Refresh every %s seconds."
 msgstr "每 %s 秒刷新。"
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:250
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:285
 msgctxt "scroll to top (the head) of the log file"
 msgid "Scroll to head"
 msgstr "滚动到顶部"
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:238
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:273
 msgctxt "scroll to bottom (the tail) of the log file"
 msgid "Scroll to tail"
 msgstr "滚动到尾部"
@@ -114,6 +144,10 @@ msgstr "滚动到尾部"
 #: applications/luci-app-duck/root/usr/share/luci/menu.d/luci-app-duck.json:16
 msgid "Settings"
 msgstr "设置"
+
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:251
+msgid "Success"
+msgstr ""
 
 #: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:77
 msgid "The maximum number of old log files to retain."
@@ -123,7 +157,7 @@ msgstr "要保留的最大旧日志文件数量。"
 msgid "The maximum size in megabytes of the log file before it gets rotated."
 msgstr "要保留的最大日志大小（单位：MB）。"
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:182
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:183
 msgid "Unknown error: %s"
 msgstr "未知错误：%s"
 

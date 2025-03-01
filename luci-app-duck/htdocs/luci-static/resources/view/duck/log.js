@@ -5,6 +5,7 @@
 'require fs';
 'require poll';
 'require view';
+'require ui';
 
 return view.extend({
 	render: function() {
@@ -231,6 +232,40 @@ return view.extend({
 				});
 			});
 		}
+		
+		function clearLog() {
+			return ui.showModal(_('Clear Log'), [
+				E('p', {}, _('Are you sure you want to clear the log file?')),
+				E('div', { class: 'right' }, [
+					E('button', {
+						'class': 'btn',
+						'click': ui.hideModal
+					}, _('Cancel')),
+					E('button', {
+						'class': 'cbi-button cbi-button-positive important',
+						'click': function() {
+							ui.hideModal();
+							
+							fs.write('/var/log/duck/duck.log', '')
+							.then(function() {
+								ui.addNotification(_('Success'), _('Log file has been cleared.'), 'success');
+								
+								var logContainer = document.getElementById('log_textarea');
+								var preElem = logContainer.querySelector('pre');
+								if (preElem) {
+									preElem.innerHTML = _('Log file does not exist.');
+									logEntriesCache = null;
+									originalLogContent = '';
+								}
+							})
+							.catch(function(error) {
+								ui.addNotification(_('Error'), _('Failed to clear log file: %s').format(error), 'error');
+							});
+						}
+					}, _('Clear'))
+				])
+			]);
+		}
 
 		var scrollDownButton = E('button', {
 				'id': 'scrollDownButton',
@@ -262,6 +297,13 @@ return view.extend({
 			}, _('Clear Filter')
 		);
 		
+		var clearLogButton = E('button', {
+			'id': 'clearLogButton',
+			'class': 'cbi-button cbi-button-negative',
+		}, _('Clear Log'));
+		
+		clearLogButton.addEventListener('click', clearLog);
+		
 		var filterInput = E('input', {
 			'id': 'filterInput',
 			'type': 'text',
@@ -291,7 +333,8 @@ return view.extend({
 					scrollUpButton,
 					scrollDownButton,
 					filterInput,
-					clearFilterButton
+					clearFilterButton,
+					clearLogButton
 				]),
 				E('div', {'class': 'cbi-section'}, [
 					log_textarea,

@@ -16,7 +16,8 @@
 		},
 		"write": {
 			"file": {
-				"/etc/duck/config.dae": [ "write" ]
+				"/etc/duck/config.dae": [ "write" ],
+				"/var/log/duck/duck.log": [ "write" ]
 			},
 			"uci": [ "duck" ]
 		}
