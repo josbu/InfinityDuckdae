@@ -64,7 +64,7 @@ return view.extend({
 				return content ?? '';
 			}).catch(function(e) {
 				if (e.toString().includes('NotFoundError'))
-					return fs.read_direct('/etc/duck/example.duck', 'text')
+					return fs.read_direct('/etc/duck/example.dae', 'text')
 						.then(function(content) {
 							return content ?? '';
 						}).catch(function(e) {

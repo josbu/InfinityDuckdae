@@ -1,7 +1,11 @@
 msgid ""
 msgstr "Content-Type: text/plain; charset=UTF-8"
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:30
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:262
+msgid "Clear Filter"
+msgstr ""
+
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:108
 #: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:63
 msgid "Collecting data…"
 msgstr ""
@@ -10,39 +14,63 @@ msgstr ""
 msgid "Configration file"
 msgstr ""
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/config.js:13
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/config.js:113
 #: applications/luci-app-duck/root/usr/share/luci/menu.d/luci-app-duck.json:24
 msgid "Configuration"
+msgstr ""
+
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/config.js:24
+msgid "Configuration cannot be empty!"
+msgstr ""
+
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/config.js:30
+msgid "Configuration validation failed!"
 msgstr ""
 
 #: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:69
 msgid "Enable"
 msgstr ""
 
-#: applications/luci-app-duck/root/usr/share/rpcd/acl.d/luci-app-duck.json:3
-msgid "Grant access to duck configuration"
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/config.js:40
+msgid "Failed to save configuration: %s"
 msgstr ""
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/config.js:14
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:268
+msgid "Filter logs..."
+msgstr ""
+
+#: applications/luci-app-duck/root/usr/share/rpcd/acl.d/luci-app-duck.json:3
+msgid "Grant access to InfinityDuck configuration"
+msgstr ""
+
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/config.js:114
 msgid ""
-"Here you can edit duck configuration. It will be hot-reloaded automatically "
+"Here you can edit dae configuration. It will be hot-reloaded automatically "
 "after apply."
 msgstr ""
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:28
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:31
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:33
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:49
+#: applications/luci-app-duck/root/usr/share/luci/menu.d/luci-app-duck.json:3
+msgid "InfinityDuck"
+msgstr ""
+
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:106
 msgid "Loading..."
 msgstr ""
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:77
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:288
 #: applications/luci-app-duck/root/usr/share/luci/menu.d/luci-app-duck.json:32
 msgid "Log"
 msgstr ""
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:46
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:178
 msgid "Log file does not exist."
 msgstr ""
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:37
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:165
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:212
 msgid "Log is empty."
 msgstr ""
 
@@ -62,16 +90,16 @@ msgstr ""
 msgid "RUNNING"
 msgstr ""
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:83
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:299
 msgid "Refresh every %s seconds."
 msgstr ""
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:69
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:250
 msgctxt "scroll to top (the head) of the log file"
 msgid "Scroll to head"
 msgstr ""
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:60
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:238
 msgctxt "scroll to bottom (the tail) of the log file"
 msgid "Scroll to tail"
 msgstr ""
@@ -88,15 +116,8 @@ msgstr ""
 msgid "The maximum size in megabytes of the log file before it gets rotated."
 msgstr ""
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:50
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:182
 msgid "Unknown error: %s"
-msgstr ""
-
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:31
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:33
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:49
-#: applications/luci-app-duck/root/usr/share/luci/menu.d/luci-app-duck.json:3
-msgid "duck"
 msgstr ""
 
 #: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:50

@@ -7,6 +7,8 @@ This project is based on [luci-app-dae](https://github.com/immortalwrt/luci/tree
 - Syntax highlighting provided by CodeMirror
 - Latest version of dae core
 - Reversed log order with scrollbar
+- Log highlighting and filtering
+- Simple Configuration File Validation
 
 ## Compilation
 1. Install dependencies
