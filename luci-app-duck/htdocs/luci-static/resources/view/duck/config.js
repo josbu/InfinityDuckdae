@@ -32,7 +32,9 @@ return view.extend({
 		}
 		
 		return callFileWrite('/etc/duck/config.dae', value).then(function() {
-			return L.resolveDefault(fs.exec_direct('/etc/init.d/duck', ['hot_reload']), null).then(function() {
+			return L.resolveDefault(fs.exec_direct('/bin/chmod', ['0600', '/etc/duck/config.dae']), null).then(function() {
+				return L.resolveDefault(fs.exec_direct('/etc/init.d/duck', ['hot_reload']), null).then(function() {
+				});
 			});
 		}).catch(function(e) {
 			ui.addNotification(null, E('p', _('Failed to save configuration: %s').format(e.message)));
