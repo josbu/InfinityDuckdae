@@ -46,8 +46,25 @@ return view.extend({
 			.controls-container {      \
 				margin-bottom: 15px;   \
 				display: flex;         \
+				flex-wrap: wrap;       \
+				gap: 10px;             \
+			}                          \
+			.controls-row {            \
+				display: flex;         \
 				gap: 10px;             \
 				flex-wrap: wrap;       \
+				margin-bottom: 10px;   \
+			}                          \
+			.controls-row:last-child { \
+				margin-bottom: 0;      \
+			}                          \
+			#filterInput {             \
+				max-width: 200px;      \
+				flex: 1;               \
+				min-width: 120px;      \
+				padding: 5px;          \
+				border-radius: 4px;    \
+				border: 1px solid #ddd; \
 			}                          \
 			.filter-highlight {        \
 				background-color: #ffeb3b; \
@@ -98,7 +115,25 @@ return view.extend({
 				}				\
 				#log_textarea::-webkit-scrollbar-thumb:hover {\
 					background: rgba(255, 255, 255, 0.25);\
-				}						\
+				}							\
+				#filterInput {          \
+					background-color: #252a30; \
+					border-color: #444; \
+					color: #e6e6e6;     \
+				}                       \
+			}                          \
+			@media (min-width: 768px) { \
+				.controls-container {  \
+					flex-direction: row; \
+					flex-wrap: nowrap;  \
+				}                      \
+				.controls-row {        \
+					margin-bottom: 0;   \
+					flex: 1;           \
+				}                      \
+				.controls-row:first-child { \
+					flex: 2;           \
+				}                      \
 			}';
 
 		var log_textarea = E('div', { 'id': 'log_textarea' },
@@ -330,11 +365,15 @@ return view.extend({
 			E('h2', {}, [ _('Log') ]),
 			E('div', {'class': 'cbi-map'}, [
 				E('div', {'class': 'controls-container'}, [
-					scrollUpButton,
-					scrollDownButton,
-					filterInput,
-					clearFilterButton,
-					clearLogButton
+					E('div', {'class': 'controls-row'}, [
+						filterInput,
+						clearFilterButton
+					]),
+					E('div', {'class': 'controls-row'}, [
+						scrollUpButton,
+						scrollDownButton,
+						clearLogButton
+					])
 				]),
 				E('div', {'class': 'cbi-section'}, [
 					log_textarea,
