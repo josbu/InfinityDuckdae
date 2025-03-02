@@ -25,36 +25,40 @@ return view.extend({
 			return Promise.reject(new Error('Empty configuration'));
 		}
 		
-		// 首先尝试验证配置文件格式 - 这里可以增加更多验证逻辑
 		if (!this.validateConfig(value)) {
 			ui.addNotification(null, E('p', _('Configuration validation failed!')), 'error');
 			return Promise.reject(new Error('Invalid configuration'));
 		}
 		
-		return callFileWrite('/etc/duck/config.dae', value).then(function() {
-			return L.resolveDefault(fs.exec_direct('/bin/chmod', ['0600', '/etc/duck/config.dae']), null).then(function() {
-				return L.resolveDefault(fs.exec_direct('/etc/init.d/duck', ['hot_reload']), null).then(function() {
-				});
-			});
-		}).catch(function(e) {
-			ui.addNotification(null, E('p', _('Failed to save configuration: %s').format(e.message)));
-			return Promise.reject(e);
-		});
+		return callFileWrite('/etc/duck/config.dae', value)
+        .then(function() {
+            return L.resolveDefault(fs.exec_direct('/bin/chmod', ['0600', '/etc/duck/config.dae']), null)
+                .then(function() {
+                    return fs.exec_direct('/etc/init.d/duck', ['status'])
+                        .then(function(res) {
+                            if (res.code !== 0) {
+                                return L.resolveDefault(fs.exec_direct('/etc/init.d/duck', ['restart']), null);
+                            } else {
+                                return L.resolveDefault(fs.exec_direct('/etc/init.d/duck', ['hot_reload']), null);
+                            }
+                        });
+                });
+        }).catch(function(e) {
+            ui.addNotification(null, E('p', _('Failed to save configuration: %s').format(e.message)));
+            return Promise.reject(e);
+        });
 	},
 	
 	validateConfig: function(config) {
-		// 基本验证 - 检查是否有匹配的花括号等
 		var braceCount = 0;
 		
 		for (var i = 0; i < config.length; i++) {
 			if (config[i] === '{') braceCount++;
 			if (config[i] === '}') braceCount--;
 			
-			// 括号不平衡，提前失败
 			if (braceCount < 0) return false;
 		}
 		
-		// 所有括号应该匹配
 		return braceCount === 0;
 	},
 
@@ -113,12 +117,10 @@ return view.extend({
 		m = new form.Map('duck', _('Configuration'),
 			_('Here you can edit dae configuration. It will be hot-reloaded automatically after apply.'));
 
-			// 监听表单提交
 		m.onValidate = function(map, data) {
 			self.formvalue = data;
 		};
 
-		// 禁用默认保存行为，改用我们自定义的保存函数
 		m.submitSave = function() {
 			return false;
 		};
@@ -138,21 +140,17 @@ return view.extend({
 		var formEl = m.render();
 		
 		window.setTimeout(function() {
-			// 加载CodeMirror主脚本
 			var cmScript = document.createElement('script');
 			cmScript.src = "/luci-static/resources/codemirror/codemirror.min.js";
 			
-			// 加载CodeMirror样式
 			var cmStyle = document.createElement('link');
 			cmStyle.rel = "stylesheet";
 			cmStyle.href = "/luci-static/resources/codemirror/codemirror.min.css";
 			
-			// 加载亮色主题
 			var lightThemeStyle = document.createElement('link');
 			lightThemeStyle.rel = "stylesheet";
 			lightThemeStyle.href = "/luci-static/resources/codemirror/theme/eclipse.min.css";
 			
-			// 加载深色主题
 			var darkThemeStyle = document.createElement('link');
 			darkThemeStyle.rel = "stylesheet";
 			darkThemeStyle.href = "/luci-static/resources/codemirror/theme/dracula.min.css";
@@ -163,11 +161,9 @@ return view.extend({
 			scriptDiv.appendChild(cmScript);
 			
 			cmScript.onload = function() {
-				 // 为duck语言定义简单的语法高亮
 				CodeMirror.defineMode("duck", function() {
 					return {
 						token: function(stream, state) {
-							// 处理注释
 							if (stream.match(/^#.*/)) return "comment";
 							if (stream.match(/^\/\*/)) {
 								state.inComment = true;
@@ -183,23 +179,17 @@ return view.extend({
 								return "comment";
 							}
 							
-							// 处理字符串
 							if (stream.match(/^"(?:[^"\\]|\\.)*"/)) return "string";
 							if (stream.match(/^'(?:[^'\\]|\\.)*'/)) return "string";
 							
-							// 处理关键词
 							if (stream.match(/\b(?:block|direct)\b/)) return "keyword";
 							
-							// 处理运算符
 							if (stream.match(/->|&&|!/)) return "operator";
 							
-							// 处理括号
 							if (stream.match(/[{}()]/)) return "bracket";
 							
-							// 处理属性定义
 							if (stream.match(/[a-zA-Z_][a-zA-Z_\/\\^*.+0-9\-=@$!#%]*:/)) return "property";
 							
-							// 处理变量/标识符
 							if (stream.match(/[a-zA-Z_][a-zA-Z_\/\\^*.+0-9\-=@$!#%]*/)) return "variable";
 							
 							stream.next();
@@ -212,11 +202,9 @@ return view.extend({
 					};
 				});
 				
-				 // 检测系统颜色方案
 				var prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
 				var currentTheme = prefersDarkMode ? 'dracula' : 'eclipse';
 				
-				// 初始化编辑器
 				editorInstance = CodeMirror(document.getElementById('code_editor'), {
 					value: content,
 					mode: "duck",
@@ -228,13 +216,11 @@ return view.extend({
 					theme: currentTheme
 				});
 				
-				// 监听系统主题变化并更新编辑器主题
 				window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
 					var newTheme = e.matches ? 'dracula' : 'eclipse';
 					editorInstance.setOption('theme', newTheme);
 				});
 				
-				// 编辑器内容变更时更新隐藏输入
 				editorInstance.on('change', function() {
 					hiddenInput.value = editorInstance.getValue();
 					document.getElementById('cbid_duck_config__configuration').value = editorInstance.getValue();

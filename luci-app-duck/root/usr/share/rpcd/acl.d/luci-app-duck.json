@@ -6,7 +6,9 @@
 				"/etc/duck/config.dae": [ "read" ],
 				"/etc/duck/example.dae": [ "read" ],
 				"/var/log/duck/duck.log": [ "read" ],
+				"/etc/init.d/duck status": [ "exec" ],
 				"/etc/init.d/duck hot_reload": [ "exec" ],
+				"/etc/init.d/duck restart": [ "exec" ],
 				"/bin/chmod 0600 /etc/duck/config.dae": [ "exec" ]
 			},
 			"ubus": {
