@@ -8,7 +8,7 @@
 'require ui';
 
 return view.extend({
-	render: function() {
+	render: function () {
 		/* Thanks to luci-app-aria2 */
 		var css = '					\
 			#log_textarea {				\
@@ -143,10 +143,10 @@ return view.extend({
 				'style': 'vertical-align:middle'
 			}, _('Collecting data…'))
 		);
-		
+
 		function formatLogLine(line) {
 			line = line.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-			
+
 			line = line
 				.replace(/\b(error|failed)\b/g, '<span class="log-error">$1</span>')
 				.replace(/\b(warn|warning)\b/g, '<span class="log-warn">$1</span>')
@@ -156,7 +156,7 @@ return view.extend({
 
 			line = line.replace(/(\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b)/g,
 				'<span class="log-ip">$1</span>');
-				
+
 			return '<div class="log-container">' + line + '</div>';
 		}
 
@@ -165,7 +165,7 @@ return view.extend({
 		var debounceTimeout = null;
 
 		function debounce(func, wait) {
-			return function(...args) {
+			return function (...args) {
 				const context = this;
 				clearTimeout(debounceTimeout);
 				debounceTimeout = setTimeout(() => {
@@ -176,67 +176,67 @@ return view.extend({
 
 		function highlightFilter(text, filter) {
 			if (!filter) return text;
-			
+
 			var safeFilter = filter.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 			var regex = new RegExp('(' + safeFilter + ')', 'gi');
-			
+
 			return text.replace(regex, '<span class="filter-highlight">$1</span>');
 		}
 
-		poll.add(L.bind(function() {
+		poll.add(L.bind(function () {
 			return fs.read_direct('/var/log/duck/duck.log', 'text')
-			.then(function(content) {
-				var contentLines = content.trim().split(/\r?\n/);
-				var reversedContent = contentLines.reverse();
-				
-				var formattedLines = reversedContent.map(function(line) {
-					return formatLogLine(line);
+				.then(function (content) {
+					var contentLines = content.trim().split(/\r?\n/);
+					var reversedContent = contentLines.reverse();
+
+					var formattedLines = reversedContent.map(function (line) {
+						return formatLogLine(line);
+					});
+
+					var formattedContent = formattedLines.join('');
+					originalLogContent = formattedContent;
+					logEntriesCache = null;
+
+					var logContainer = E('pre', {});
+					logContainer.innerHTML = formattedContent || _('Log is empty.');
+
+					dom.content(log_textarea, logContainer);
+
+					var filterInput = document.getElementById('filterInput');
+					if (filterInput && filterInput.value) {
+						applyFilter(filterInput.value);
+					}
+				}).catch(function (e) {
+					var log;
+
+					if (e.toString().includes('NotFoundError'))
+						log = E('pre', { 'wrap': 'pre' }, [
+							_('Log file does not exist.')
+						]);
+					else
+						log = E('pre', { 'wrap': 'pre' }, [
+							_('Unknown error: %s').format(e)
+						]);
+
+					dom.content(log_textarea, log);
 				});
-				
-				var formattedContent = formattedLines.join('');
-				originalLogContent = formattedContent;
-				logEntriesCache = null;
-				
-				var logContainer = E('pre', {});
-				logContainer.innerHTML = formattedContent || _('Log is empty.');
-				
-				dom.content(log_textarea, logContainer);
-
-				var filterInput = document.getElementById('filterInput');
-				if (filterInput && filterInput.value) {
-					applyFilter(filterInput.value);
-				}
-			}).catch(function(e) {
-				var log;
-
-				if (e.toString().includes('NotFoundError'))
-					log = E('pre', { 'wrap': 'pre' }, [
-						_('Log file does not exist.')
-					]);
-				else
-					log = E('pre', { 'wrap': 'pre' }, [
-						_('Unknown error: %s').format(e)
-					]);
-
-				dom.content(log_textarea, log);
-			});
 		}));
 
 		function cacheLogEntries() {
 			if (logEntriesCache) return logEntriesCache;
-			
+
 			var logContainer = document.getElementById('log_textarea');
 			var entries = logContainer.querySelectorAll('.log-container');
 			logEntriesCache = [];
-			
-			entries.forEach(function(entry) {
+
+			entries.forEach(function (entry) {
 				logEntriesCache.push({
 					element: entry,
 					text: entry.textContent.toLowerCase(),
 					originalHtml: entry.innerHTML
 				});
 			});
-			
+
 			return logEntriesCache;
 		}
 
@@ -254,9 +254,9 @@ return view.extend({
 			filter = filter.toLowerCase();
 			var entries = cacheLogEntries();
 			var matchCount = 0;
-			
-			requestAnimationFrame(function() {
-				entries.forEach(function(entry) {
+
+			requestAnimationFrame(function () {
+				entries.forEach(function (entry) {
 					if (entry.text.includes(filter)) {
 						matchCount++;
 						entry.element.innerHTML = highlightFilter(entry.originalHtml, filter);
@@ -267,7 +267,7 @@ return view.extend({
 				});
 			});
 		}
-		
+
 		function clearLog() {
 			return ui.showModal(_('Clear Log'), [
 				E('p', {}, _('Are you sure you want to clear the log file?')),
@@ -278,24 +278,24 @@ return view.extend({
 					}, _('Cancel')),
 					E('button', {
 						'class': 'cbi-button cbi-button-positive important',
-						'click': function() {
+						'click': function () {
 							ui.hideModal();
-							
+
 							fs.write('/var/log/duck/duck.log', '')
-							.then(function() {
-								ui.addNotification(_('Success'), _('Log file has been cleared.'), 'success');
-								
-								var logContainer = document.getElementById('log_textarea');
-								var preElem = logContainer.querySelector('pre');
-								if (preElem) {
-									preElem.innerHTML = _('Log file does not exist.');
-									logEntriesCache = null;
-									originalLogContent = '';
-								}
-							})
-							.catch(function(error) {
-								ui.addNotification(_('Error'), _('Failed to clear log file: %s').format(error), 'error');
-							});
+								.then(function () {
+									ui.addNotification(_('Success'), _('Log file has been cleared.'), 'success');
+
+									var logContainer = document.getElementById('log_textarea');
+									var preElem = logContainer.querySelector('pre');
+									if (preElem) {
+										preElem.innerHTML = _('Log file does not exist.');
+										logEntriesCache = null;
+										originalLogContent = '';
+									}
+								})
+								.catch(function (error) {
+									ui.addNotification(_('Error'), _('Failed to clear log file: %s').format(error), 'error');
+								});
 						}
 					}, _('Clear'))
 				])
@@ -303,11 +303,11 @@ return view.extend({
 		}
 
 		var scrollDownButton = E('button', {
-				'id': 'scrollDownButton',
-				'class': 'cbi-button cbi-button-neutral',
-			}, _('Scroll to tail', 'scroll to bottom (the tail) of the log file')
+			'id': 'scrollDownButton',
+			'class': 'cbi-button cbi-button-neutral',
+		}, _('Scroll to tail', 'scroll to bottom (the tail) of the log file')
 		);
-		scrollDownButton.addEventListener('click', function() {
+		scrollDownButton.addEventListener('click', function () {
 			var logContainer = document.getElementById('log_textarea');
 			if (logContainer) {
 				logContainer.scrollTop = logContainer.scrollHeight;
@@ -315,43 +315,43 @@ return view.extend({
 		});
 
 		var scrollUpButton = E('button', {
-				'id' : 'scrollUpButton',
-				'class': 'cbi-button cbi-button-neutral',
-			}, _('Scroll to head', 'scroll to top (the head) of the log file')
+			'id': 'scrollUpButton',
+			'class': 'cbi-button cbi-button-neutral',
+		}, _('Scroll to head', 'scroll to top (the head) of the log file')
 		);
-		scrollUpButton.addEventListener('click', function() {
+		scrollUpButton.addEventListener('click', function () {
 			var logContainer = document.getElementById('log_textarea');
 			if (logContainer) {
 				logContainer.scrollTop = 0;
 			}
 		});
-        
+
 		var clearFilterButton = E('button', {
-				'id': 'clearFilterButton',
-				'class': 'cbi-button cbi-button-neutral',
-			}, _('Clear Filter')
+			'id': 'clearFilterButton',
+			'class': 'cbi-button cbi-button-neutral',
+		}, _('Clear Filter')
 		);
-		
+
 		var clearLogButton = E('button', {
 			'id': 'clearLogButton',
 			'class': 'cbi-button cbi-button-negative',
 		}, _('Clear Log'));
-		
+
 		clearLogButton.addEventListener('click', clearLog);
-		
+
 		var filterInput = E('input', {
 			'id': 'filterInput',
 			'type': 'text',
 			'placeholder': _('Filter logs...'),
 			'style': 'padding: 5px; border-radius: 4px; border: 1px solid #ddd; width: 200px;'
 		});
-		
-		filterInput.addEventListener('input', debounce(function() {
+
+		filterInput.addEventListener('input', debounce(function () {
 			var filter = this.value;
 			applyFilter(filter);
 		}, 200));
-		
-		clearFilterButton.addEventListener('click', function() {
+
+		clearFilterButton.addEventListener('click', function () {
 			var filterInput = document.getElementById('filterInput');
 			if (filterInput) {
 				filterInput.value = '';
@@ -361,23 +361,23 @@ return view.extend({
 		});
 
 		return E([
-			E('style', [ css ]),
-			E('h2', {}, [ _('Log') ]),
-			E('div', {'class': 'cbi-map'}, [
-				E('div', {'class': 'controls-container'}, [
-					E('div', {'class': 'controls-row'}, [
+			E('style', [css]),
+			E('h2', {}, [_('Log')]),
+			E('div', { 'class': 'cbi-map' }, [
+				E('div', { 'class': 'controls-container' }, [
+					E('div', { 'class': 'controls-row' }, [
 						filterInput,
 						clearFilterButton
 					]),
-					E('div', {'class': 'controls-row'}, [
+					E('div', { 'class': 'controls-row' }, [
 						scrollUpButton,
 						scrollDownButton,
 						clearLogButton
 					])
 				]),
-				E('div', {'class': 'cbi-section'}, [
+				E('div', { 'class': 'cbi-section' }, [
 					log_textarea,
-					E('div', {'style': 'text-align:right; margin-top: 5px;'},
+					E('div', { 'style': 'text-align:right; margin-top: 5px;' },
 						E('small', {}, _('Refresh every %s seconds.').format(L.env.pollinterval))
 					)
 				])

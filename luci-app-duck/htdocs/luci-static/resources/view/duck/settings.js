@@ -37,13 +37,13 @@ function renderStatus(isRunning) {
 }
 
 return view.extend({
-	load: function() {
+	load: function () {
 		return Promise.all([
 			uci.load('duck')
 		]);
 	},
 
-	render: function(data) {
+	render: function (data) {
 		var m, s, o;
 
 		m = new form.Map('duck', _('InfinityDuck'),
@@ -60,7 +60,7 @@ return view.extend({
 			});
 
 			return E('div', { class: 'cbi-section', id: 'status_bar' }, [
-					E('p', { id: 'service_status' }, _('Collecting data…'))
+				E('p', { id: 'service_status' }, _('Collecting data…'))
 			]);
 		}
 
