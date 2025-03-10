@@ -39,7 +39,6 @@ define Package/duck/Default
   CATEGORY:=Network
   SUBMENU:=Web Servers/Proxies
   URL:=https://github.com/duckuniverse/dae
-  PROVIDES:=duck dae
 endef
 
 define Package/duck
