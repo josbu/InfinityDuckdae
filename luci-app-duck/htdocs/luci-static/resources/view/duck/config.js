@@ -193,7 +193,8 @@ return view.extend({
 						minimap: { enabled: false },
 						scrollBeyondLastLine: false,
 						lineNumbers: 'on',
-						tabSize: 4
+						tabSize: 4,
+						wordWrap: 'on'
 					});
 
 					var validateTimer = null;
