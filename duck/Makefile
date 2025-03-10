@@ -55,7 +55,6 @@ define Package/duck-geoip
   TITLE:=geoip for duck
   DEPENDS:=+duck +v2ray-geoip
   PKGARCH:=all
-  PROVIDES:=duck-geoip dae-geoip
 endef
 
 define Package/duck-geosite
@@ -63,7 +62,6 @@ define Package/duck-geosite
   TITLE:=geosite for duck
   DEPENDS:=+duck +v2ray-geosite
   PKGARCH:=all
-  PROVIDES:=duck-geosite dae-geosite
 endef
 
 define Package/duck/description
