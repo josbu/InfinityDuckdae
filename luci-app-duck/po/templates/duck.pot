@@ -1,28 +1,32 @@
 msgid ""
 msgstr "Content-Type: text/plain; charset=UTF-8"
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:238
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/config.js:36
+msgid "(Line: %d)"
+msgstr ""
+
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:273
 msgid "Are you sure you want to clear the log file?"
 msgstr ""
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:243
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:278
 msgid "Cancel"
 msgstr ""
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:265
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:300
 msgid "Clear"
 msgstr ""
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:297
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:332
 msgid "Clear Filter"
 msgstr ""
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:237
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:303
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:272
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:338
 msgid "Clear Log"
 msgstr ""
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:109
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:144
 #: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:63
 msgid "Collecting data…"
 msgstr ""
@@ -36,11 +40,11 @@ msgstr ""
 msgid "Configuration"
 msgstr ""
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/config.js:24
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/config.js:26
 msgid "Configuration cannot be empty!"
 msgstr ""
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/config.js:30
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/config.js:40
 msgid "Configuration validation failed!"
 msgstr ""
 
@@ -48,20 +52,28 @@ msgstr ""
 msgid "Enable"
 msgstr ""
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:262
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:297
 msgid "Error"
 msgstr ""
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:262
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:297
 msgid "Failed to clear log file: %s"
 msgstr ""
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/config.js:40
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/config.js:63
 msgid "Failed to save configuration: %s"
 msgstr ""
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:310
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:345
 msgid "Filter logs..."
+msgstr ""
+
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/config.js:252
+msgid "Found unmatched closing bracket"
+msgstr ""
+
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/config.js:253
+msgid "Found unmatched opening bracket"
 msgstr ""
 
 #: applications/luci-app-duck/root/usr/share/rpcd/acl.d/luci-app-duck.json:3
@@ -81,26 +93,26 @@ msgstr ""
 msgid "InfinityDuck"
 msgstr ""
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:107
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:142
 msgid "Loading..."
 msgstr ""
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:330
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:365
 #: applications/luci-app-duck/root/usr/share/luci/menu.d/luci-app-duck.json:32
 msgid "Log"
 msgstr ""
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:179
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:256
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:214
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:291
 msgid "Log file does not exist."
 msgstr ""
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:251
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:286
 msgid "Log file has been cleared."
 msgstr ""
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:166
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:213
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:201
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:248
 msgid "Log is empty."
 msgstr ""
 
@@ -120,16 +132,16 @@ msgstr ""
 msgid "RUNNING"
 msgstr ""
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:342
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:381
 msgid "Refresh every %s seconds."
 msgstr ""
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:285
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:320
 msgctxt "scroll to top (the head) of the log file"
 msgid "Scroll to head"
 msgstr ""
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:273
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:308
 msgctxt "scroll to bottom (the tail) of the log file"
 msgid "Scroll to tail"
 msgstr ""
@@ -138,7 +150,7 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:251
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:286
 msgid "Success"
 msgstr ""
 
@@ -150,7 +162,11 @@ msgstr ""
 msgid "The maximum size in megabytes of the log file before it gets rotated."
 msgstr ""
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:183
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/config.js:264
+msgid "Unclosed bracket"
+msgstr ""
+
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:218
 msgid "Unknown error: %s"
 msgstr ""
 

@@ -29,10 +29,19 @@ return view.extend({
 
 		if (this.editorInstance) {
 			var model = this.editorInstance.getModel();
-			var markers = monaco.editor.getModelMarkers({ resource: model.uri });
+			var markers = monaco.editor.getModelMarkers({ owner: 'duck-validator', resource: model.uri });
 			
 			if (markers && markers.length > 0) {
-				ui.addNotification(null, E('p', _('Configuration validation failed!')), 'error');
+				var errorMessages = markers.map(function(marker) {
+					return marker.message + ' ' + _('(Line: %d)').format(marker.startLineNumber);
+				}).join('<br>');
+				
+				ui.addNotification(null, E('p', [
+					_('Configuration validation failed!'), 
+					E('br'), 
+					E('small', errorMessages)
+				]), 'error');
+				
 				return Promise.reject(new Error('Invalid configuration'));
 			}
 		}
@@ -151,7 +160,6 @@ return view.extend({
 								[/#.*$/, 'comment'],
 								[/\/\*/, 'comment', '@comment'],
 								[/"(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'/, 'string'],
-								[/\b(block|direct)\b/, 'keyword'],
 								[/->|&&|!/, 'operator'],
 								[/[{}()]/, 'delimiter.bracket'],
 								[/[a-zA-Z_][\w\/\\^*.+\-=@$!#%]*:/, 'attribute'],
@@ -187,6 +195,96 @@ return view.extend({
 						lineNumbers: 'on',
 						tabSize: 4
 					});
+
+					var validateTimer = null;
+					function validateDuckConfig() {
+						var model = self.editorInstance.getModel();
+						var content = model.getValue();
+						var lines = content.split('\n');
+						var markers = [];
+
+						monaco.editor.setModelMarkers(model, 'duck-validator', []);
+						
+						var bracketStack = [];
+						var unmatchedBrackets = [];
+						
+						for (var i = 0; i < lines.length; i++) {
+							var line = lines[i].trim();
+							
+							if (line.startsWith('#') || line.startsWith('//') || line === '') {
+								continue;
+							}
+							
+							for (var j = 0; j < line.length; j++) {
+								var char = line[j];
+								if (char === '{') {
+									bracketStack.push({ line: i + 1, char: '{', pos: j });
+								} else if (char === '}') {
+									if (bracketStack.length > 0 && bracketStack[bracketStack.length - 1].char === '{') {
+										bracketStack.pop();
+									} else {
+										unmatchedBrackets.push({ line: i + 1, pos: j, type: 'closing' });
+									}
+								} else if (char === '[') {
+									bracketStack.push({ line: i + 1, char: '[', pos: j });
+								} else if (char === ']') {
+									if (bracketStack.length > 0 && bracketStack[bracketStack.length - 1].char === '[') {
+										bracketStack.pop();
+									} else {
+										unmatchedBrackets.push({ line: i + 1, pos: j, type: 'closing' });
+									}
+								} else if (char === '(') {
+									bracketStack.push({ line: i + 1, char: '(', pos: j });
+								} else if (char === ')') {
+									if (bracketStack.length > 0 && bracketStack[bracketStack.length - 1].char === '(') {
+										bracketStack.pop();
+									} else {
+										unmatchedBrackets.push({ line: i + 1, pos: j, type: 'closing' });
+									}
+								}
+							}
+						}
+						
+						unmatchedBrackets.forEach(function(bracket) {
+							markers.push({
+								severity: monaco.MarkerSeverity.Error,
+								message: bracket.type === 'closing' ? 
+									_('Found unmatched closing bracket') : 
+									_('Found unmatched opening bracket'),
+								startLineNumber: bracket.line,
+								startColumn: bracket.pos + 1,
+								endLineNumber: bracket.line,
+								endColumn: bracket.pos + 2
+							});
+						});
+						
+						bracketStack.forEach(function(bracket) {
+							markers.push({
+								severity: monaco.MarkerSeverity.Error,
+								message: _('Unclosed bracket'),
+								startLineNumber: bracket.line,
+								startColumn: bracket.pos + 1,
+								endLineNumber: bracket.line,
+								endColumn: bracket.pos + 2
+							});
+						});
+						
+						monaco.editor.setModelMarkers(model, 'duck-validator', markers);
+					}
+					
+					self.editorInstance.onDidChangeModelContent(function() {
+						var value = self.editorInstance.getValue();
+						hiddenInput.value = value;
+						document.getElementById('cbid_duck_config__configuration').value = value;
+						self.formvalue.cbid_duck_config__configuration = value;
+						
+						if (validateTimer) {
+							clearTimeout(validateTimer);
+						}
+						validateTimer = setTimeout(validateDuckConfig, 500);
+					});
+					
+					setTimeout(validateDuckConfig, 1000);
 
 					window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
 						monaco.editor.setTheme(e.matches ? 'vs-dark' : 'vs');
