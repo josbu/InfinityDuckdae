@@ -93,14 +93,9 @@ return view.extend({
 				width: 100%;
 				border: 1px solid #ccc;
 			}
-			.CodeMirror {
-				height: 100%;
-				font-size: 14px;
-				line-height: 1.5;
-				@media (prefers-color-scheme: dark) {
-					#code_editor {
-						border-color: #555;
-					}
+			@media (prefers-color-scheme: dark) {
+				#code_editor {
+					border-color: #555;
 				}
 			}
 		`);
@@ -140,91 +135,76 @@ return view.extend({
 		var formEl = m.render();
 
 		window.setTimeout(function () {
-			var cmScript = document.createElement('script');
-			cmScript.src = "/luci-static/resources/codemirror/codemirror.min.js";
+			var loaderScript = document.createElement('script');
+			loaderScript.src = "/luci-static/resources/monaco-editor/min/vs/loader.js";
+			document.head.appendChild(loaderScript);
 
-			var cmStyle = document.createElement('link');
-			cmStyle.rel = "stylesheet";
-			cmStyle.href = "/luci-static/resources/codemirror/codemirror.min.css";
+			loaderScript.onload = function () {
+				require.config({
+					paths: {
+						'vs': '/luci-static/resources/monaco-editor/min/vs'
+					}
+				});
 
-			var lightThemeStyle = document.createElement('link');
-			lightThemeStyle.rel = "stylesheet";
-			lightThemeStyle.href = "/luci-static/resources/codemirror/theme/eclipse.min.css";
-
-			var darkThemeStyle = document.createElement('link');
-			darkThemeStyle.rel = "stylesheet";
-			darkThemeStyle.href = "/luci-static/resources/codemirror/theme/dracula.min.css";
-
-			document.head.appendChild(cmStyle);
-			document.head.appendChild(lightThemeStyle);
-			document.head.appendChild(darkThemeStyle);
-			scriptDiv.appendChild(cmScript);
-
-			cmScript.onload = function () {
-				CodeMirror.defineMode("duck", function () {
-					return {
-						token: function (stream, state) {
-							if (stream.match(/^#.*/)) return "comment";
-							if (stream.match(/^\/\*/)) {
-								state.inComment = true;
-								return "comment";
-							}
-
-							if (state.inComment) {
-								if (stream.match(/\*\//)) {
-									state.inComment = false;
-									return "comment";
-								}
-								stream.next();
-								return "comment";
-							}
-
-							if (stream.match(/^"(?:[^"\\]|\\.)*"/)) return "string";
-							if (stream.match(/^'(?:[^'\\]|\\.)*'/)) return "string";
-
-							if (stream.match(/\b(?:block|direct)\b/)) return "keyword";
-
-							if (stream.match(/->|&&|!/)) return "operator";
-
-							if (stream.match(/[{}()]/)) return "bracket";
-
-							if (stream.match(/[a-zA-Z_][a-zA-Z_\/\\^*.+0-9\-=@$!#%]*:/)) return "property";
-
-							if (stream.match(/[a-zA-Z_][a-zA-Z_\/\\^*.+0-9\-=@$!#%]*/)) return "variable";
-
-							stream.next();
-							return null;
-						},
-
-						startState: function () {
-							return { inComment: false };
+				require(['vs/editor/editor.main'], function () {
+					monaco.languages.register({ id: 'duck' });
+					monaco.languages.setMonarchTokensProvider('duck', {
+						tokenizer: {
+							root: [
+								[/#.*$/, 'comment'],
+								[/\/\*/, 'comment', '@comment'],
+								
+								[/"(?:[^"\\]|\\.)*"/, 'string'],
+								[/'(?:[^'\\]|\\.)*'/, 'string'],
+								
+								[/\b(block|direct)\b/, 'keyword'],
+								
+								[/->|&&|!/, 'operator'],
+								
+								[/[{}()]/, 'delimiter.bracket'],
+								
+								[/[a-zA-Z_][a-zA-Z_\/\\^*.+0-9\-=@$!#%]*:/, 'attribute'],
+								
+								[/[a-zA-Z_][a-zA-Z_\/\\^*.+0-9\-=@$!#%]*/, 'variable']
+							],
+							comment: [
+								[/\*\//, 'comment', '@pop'],
+								[/./, 'comment']
+							]
 						}
-					};
-				});
+					});
 
-				var prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
-				var currentTheme = prefersDarkMode ? 'dracula' : 'eclipse';
+					var prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+					var currentTheme = prefersDarkMode ? 'vs-dark' : 'vs';
 
-				editorInstance = CodeMirror(document.getElementById('code_editor'), {
-					value: content,
-					mode: "duck",
-					lineNumbers: true,
-					indentUnit: 4,
-					tabSize: 4,
-					indentWithTabs: true,
-					lineWrapping: true,
-					theme: currentTheme
-				});
+					editorInstance = monaco.editor.create(document.getElementById('code_editor'), {
+						value: content,
+						language: 'duck',
+						theme: currentTheme,
+						automaticLayout: true,
+						minimap: {
+							enabled: false
+						},
+						scrollBeyondLastLine: false,
+						lineNumbers: 'on',
+						tabSize: 4,
+						insertSpaces: false
+					});
 
-				window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function (e) {
-					var newTheme = e.matches ? 'dracula' : 'eclipse';
-					editorInstance.setOption('theme', newTheme);
-				});
+					window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
+						var newTheme = e.matches ? 'vs-dark' : 'vs';
+						monaco.editor.setTheme(newTheme);
+					});
 
-				editorInstance.on('change', function () {
-					hiddenInput.value = editorInstance.getValue();
-					document.getElementById('cbid_duck_config__configuration').value = editorInstance.getValue();
-					self.formvalue.cbid_duck_config__configuration = editorInstance.getValue();
+					editorInstance.onDidChangeModelContent(function() {
+						hiddenInput.value = editorInstance.getValue();
+						document.getElementById('cbid_duck_config__configuration').value = editorInstance.getValue();
+						self.formvalue.cbid_duck_config__configuration = editorInstance.getValue();
+					});
+
+					window.addEventListener('resize', function() {
+						editorInstance.layout();
+					});
 				});
 			};
 		}, 100);
