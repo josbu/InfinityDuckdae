@@ -1,14 +1,18 @@
-# InfinityDuck
-<p align="center"><img src="img/duck.png" border="0" width="16%"></p><br>
+<div align="center">
 
+# InfinityDuck
 This project is based on [luci-app-dae](https://github.com/immortalwrt/luci/tree/master/applications/luci-app-dae), originally maintained by [Tianling Shen](https://github.com/1715173329).
 
+<img src="img/duck.png" border="0" width="16%"></p><br>
+</div>
+
 ## New Features:
-- Syntax highlighting provided by CodeMirror
-- Latest version of dae core
+- Powerful config editor provided by monaco-editor
+- Latest commit version of dae core
 - Reversed log order with scrollbar
 - Log highlighting and filtering
-- Simple Configuration File Validation
+- Simple config file validation
+
 
 ## Compilation
 1. Install dependencies
