@@ -17,6 +17,8 @@ var callFileWrite = rpc.declare({
 });
 
 return view.extend({
+	editorInstance: null,
+	
 	handleSaveApply: function (ev, mode) {
 		var value = document.getElementById('cbid_duck_config__configuration').value;
 
@@ -25,9 +27,14 @@ return view.extend({
 			return Promise.reject(new Error('Empty configuration'));
 		}
 
-		if (!this.validateConfig(value)) {
-			ui.addNotification(null, E('p', _('Configuration validation failed!')), 'error');
-			return Promise.reject(new Error('Invalid configuration'));
+		if (this.editorInstance) {
+			var model = this.editorInstance.getModel();
+			var markers = monaco.editor.getModelMarkers({ resource: model.uri });
+			
+			if (markers && markers.length > 0) {
+				ui.addNotification(null, E('p', _('Configuration validation failed!')), 'error');
+				return Promise.reject(new Error('Invalid configuration'));
+			}
 		}
 
 		return callFileWrite('/etc/duck/config.dae', value)
@@ -49,19 +56,6 @@ return view.extend({
 			});
 	},
 
-	validateConfig: function (config) {
-		var braceCount = 0;
-
-		for (var i = 0; i < config.length; i++) {
-			if (config[i] === '{') braceCount++;
-			if (config[i] === '}') braceCount--;
-
-			if (braceCount < 0) return false;
-		}
-
-		return braceCount === 0;
-	},
-
 	load: function () {
 		return fs.read_direct('/etc/duck/config.dae', 'text')
 			.then(function (content) {
@@ -81,8 +75,7 @@ return view.extend({
 	},
 
 	render: function (content) {
-		var m, s, o;
-		var editorInstance = null;
+		var m, s;
 		var self = this;
 
 		self.formvalue = {};
@@ -101,7 +94,6 @@ return view.extend({
 		`);
 
 		var editorDiv = E('div', { id: 'code_editor' });
-		var scriptDiv = E('div');
 		var hiddenInput = E('input', {
 			type: 'hidden',
 			id: 'cbid_duck_config__configuration',
@@ -127,8 +119,7 @@ return view.extend({
 			return E('div', { 'class': 'cbi-section' }, [
 				css,
 				editorDiv,
-				hiddenInput,
-				scriptDiv
+				hiddenInput
 			]);
 		};
 
@@ -143,29 +134,28 @@ return view.extend({
 				require.config({
 					paths: {
 						'vs': '/luci-static/resources/monaco-editor/min/vs'
+					},
+					'vs/nls': {
+						availableLanguages: {
+							'*': 'zh-cn'
+						}
 					}
 				});
 
 				require(['vs/editor/editor.main'], function () {
 					monaco.languages.register({ id: 'duck' });
+					
 					monaco.languages.setMonarchTokensProvider('duck', {
 						tokenizer: {
 							root: [
 								[/#.*$/, 'comment'],
 								[/\/\*/, 'comment', '@comment'],
-								
-								[/"(?:[^"\\]|\\.)*"/, 'string'],
-								[/'(?:[^'\\]|\\.)*'/, 'string'],
-								
+								[/"(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'/, 'string'],
 								[/\b(block|direct)\b/, 'keyword'],
-								
 								[/->|&&|!/, 'operator'],
-								
 								[/[{}()]/, 'delimiter.bracket'],
-								
-								[/[a-zA-Z_][a-zA-Z_\/\\^*.+0-9\-=@$!#%]*:/, 'attribute'],
-								
-								[/[a-zA-Z_][a-zA-Z_\/\\^*.+0-9\-=@$!#%]*/, 'variable']
+								[/[a-zA-Z_][\w\/\\^*.+\-=@$!#%]*:/, 'attribute'],
+								[/[a-zA-Z_][\w\/\\^*.+\-=@$!#%]*/, 'variable']
 							],
 							comment: [
 								[/\*\//, 'comment', '@pop'],
@@ -174,36 +164,43 @@ return view.extend({
 						}
 					});
 
-					var prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
-					var currentTheme = prefersDarkMode ? 'vs-dark' : 'vs';
+					monaco.languages.setLanguageConfiguration('duck', {
+						brackets: [['{','}'], ['[',']'], ['(',')'], ['\'','\''], ['"','"']],
+						autoClosingPairs: [
+							{ open: '{', close: '}' },
+							{ open: '[', close: ']' },
+							{ open: '(', close: ')' },
+							{ open: '\'', close: '\'', notIn: ['string', 'comment'] },
+							{ open: '"', close: '"', notIn: ['string', 'comment'] }
+						]
+					});
 
-					editorInstance = monaco.editor.create(document.getElementById('code_editor'), {
+					var prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+					
+					self.editorInstance = monaco.editor.create(document.getElementById('code_editor'), {
 						value: content,
 						language: 'duck',
-						theme: currentTheme,
+						theme: prefersDarkMode ? 'vs-dark' : 'vs',
 						automaticLayout: true,
-						minimap: {
-							enabled: false
-						},
+						minimap: { enabled: false },
 						scrollBeyondLastLine: false,
 						lineNumbers: 'on',
-						tabSize: 4,
-						insertSpaces: false
+						tabSize: 4
 					});
 
 					window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
-						var newTheme = e.matches ? 'vs-dark' : 'vs';
-						monaco.editor.setTheme(newTheme);
+						monaco.editor.setTheme(e.matches ? 'vs-dark' : 'vs');
 					});
 
-					editorInstance.onDidChangeModelContent(function() {
-						hiddenInput.value = editorInstance.getValue();
-						document.getElementById('cbid_duck_config__configuration').value = editorInstance.getValue();
-						self.formvalue.cbid_duck_config__configuration = editorInstance.getValue();
+					self.editorInstance.onDidChangeModelContent(function() {
+						var value = self.editorInstance.getValue();
+						hiddenInput.value = value;
+						document.getElementById('cbid_duck_config__configuration').value = value;
+						self.formvalue.cbid_duck_config__configuration = value;
 					});
 
 					window.addEventListener('resize', function() {
-						editorInstance.layout();
+						self.editorInstance.layout();
 					});
 				});
 			};
