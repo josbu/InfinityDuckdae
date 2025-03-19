@@ -13,6 +13,25 @@ This project is based on [luci-app-dae](https://github.com/immortalwrt/luci/tree
 - Log highlighting and filtering
 - Simple config file validation
 
+## Install
+1. Add feed
+```shell
+# only needs to be run once
+curl -s -L https://github.com/JohnsonRan/InfinitySubstance/raw/main/feed.sh | ash
+```
+
+2. Install
+```shell
+# you can install from shell or `Software` menu in LuCI
+# for opkg
+opkg install duck
+opkg install luci-app-duck
+opkg install luci-i18n-duck-zh-cn
+# for apk
+apk add --allow-untrusted duck
+apk add --allow-untrusted luci-app-duck
+apk add --allow-untrusted luci-i18n-duck-zh-cn
+```
 
 ## Compilation
 1. Install dependencies
@@ -39,9 +58,11 @@ git clone https://github.com/JohnsonRan/InfinityDuck package/new/InfinityDuck
 make package/new/InfinityDuck/luci-app-duck/compile
 ```
 - Or you can try [this](https://github.com/JohnsonRan/opwrt_build_script/releases) prebuilt firmware if you are using **x86_64** or **NanoPi R5S**
-## Thanks
+## Special Thanks
 - [Percy Ma](https://marketplace.visualstudio.com/items?itemName=kecrily.dae)
 - [Tianling Shen](https://github.com/1715173329)
+- [morytyann](http://github.com/morytyann)
+- [AopisL](https://github.com/apoiston)
 - Claude 3.7 Sonnet  
 And more...
 
