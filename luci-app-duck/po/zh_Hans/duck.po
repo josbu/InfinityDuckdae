@@ -38,7 +38,7 @@ msgstr "清空日志"
 msgid "Collecting data…"
 msgstr "正在收集数据中…"
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:71
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:77
 msgid "Configration file"
 msgstr "配置文件"
 
@@ -75,11 +75,11 @@ msgstr "保存配置文件失败: %s"
 msgid "Filter logs..."
 msgstr "过滤日志..."
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/config.js:252
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/config.js:253
 msgid "Found unmatched closing bracket"
 msgstr "找到未匹配的右括号"
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/config.js:253
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/config.js:254
 msgid "Found unmatched opening bracket"
 msgstr "找到未匹配的左括号"
 
@@ -123,11 +123,11 @@ msgstr "日志已清空"
 msgid "Log is empty."
 msgstr "日志为空"
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:76
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:86
 msgid "Max log backups"
 msgstr "最大日志备份"
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:81
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:91
 msgid "Max log size"
 msgstr "最大日志大小"
 
@@ -157,19 +157,37 @@ msgstr "滚动到尾部"
 msgid "Settings"
 msgstr "设置"
 
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:71
+msgid "Startup Delay"
+msgstr "启动延迟"
+
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:72
+msgid "Startup delay in seconds."
+msgstr "启动延迟（秒）"
+
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:82
+msgid "Subscription URL"
+msgstr "订阅URL"
+
 #: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:286
 msgid "Success"
 msgstr ""
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:77
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:83
+msgid ""
+"The URL to download configuration from when starting/restarting. Will use "
+"existing config if download fails."
+msgstr "启动/重启时下载配置的 URL。若下载失败，则使用现有配置。"
+
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:87
 msgid "The maximum number of old log files to retain."
 msgstr "要保留的最大旧日志文件数量。"
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:82
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:92
 msgid "The maximum size in megabytes of the log file before it gets rotated."
 msgstr "要保留的最大日志大小（单位：MB）。"
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/config.js:264
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/config.js:265
 msgid "Unclosed bracket"
 msgstr "未闭合的括号"
 

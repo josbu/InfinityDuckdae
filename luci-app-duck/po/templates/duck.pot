@@ -31,7 +31,7 @@ msgstr ""
 msgid "Collecting data…"
 msgstr ""
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:71
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:77
 msgid "Configration file"
 msgstr ""
 
@@ -68,11 +68,11 @@ msgstr ""
 msgid "Filter logs..."
 msgstr ""
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/config.js:252
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/config.js:253
 msgid "Found unmatched closing bracket"
 msgstr ""
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/config.js:253
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/config.js:254
 msgid "Found unmatched opening bracket"
 msgstr ""
 
@@ -116,11 +116,11 @@ msgstr ""
 msgid "Log is empty."
 msgstr ""
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:76
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:86
 msgid "Max log backups"
 msgstr ""
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:81
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:91
 msgid "Max log size"
 msgstr ""
 
@@ -150,19 +150,37 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:71
+msgid "Startup Delay"
+msgstr ""
+
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:72
+msgid "Startup delay in seconds."
+msgstr ""
+
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:82
+msgid "Subscription URL"
+msgstr ""
+
 #: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:286
 msgid "Success"
 msgstr ""
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:77
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:83
+msgid ""
+"The URL to download configuration from when starting/restarting. Will use "
+"existing config if download fails."
+msgstr ""
+
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:87
 msgid "The maximum number of old log files to retain."
 msgstr ""
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:82
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:92
 msgid "The maximum size in megabytes of the log file before it gets rotated."
 msgstr ""
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/config.js:264
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/config.js:265
 msgid "Unclosed bracket"
 msgstr ""
 

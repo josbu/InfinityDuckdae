@@ -68,8 +68,8 @@ return view.extend({
 
 		o = s.option(form.Flag, 'enabled', _('Enable'));
 		
-		o = s.option(form.Value, 'delay', _('Start Delay'),
-			_('Delay start by the specified number of seconds'));
+		o = s.option(form.Value, 'delay', _('Startup Delay'),
+			_('Startup delay in seconds.'));
 		o.datatype = 'uinteger';
 		o.placeholder = '0';
 		o.default = '0';
