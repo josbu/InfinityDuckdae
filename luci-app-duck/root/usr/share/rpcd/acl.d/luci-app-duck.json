@@ -5,7 +5,6 @@
 			"file": {
 				"/etc/duck/config.dae": [ "read" ],
 				"/etc/duck/example.dae": [ "read" ],
-				 "/etc/duck/backup/config.dae.bak": [ "read" ],
 				"/var/log/duck/duck.log": [ "read" ],
 				"/etc/init.d/duck status": [ "exec" ],
 				"/etc/init.d/duck hot_reload": [ "exec" ],
