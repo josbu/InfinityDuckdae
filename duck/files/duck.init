@@ -9,6 +9,7 @@ extra_command "hot_reload" "Hot-reload service"
 CONF="duck"
 PROG="/usr/bin/dae"
 LOG_DIR="/var/log/duck"
+CRON_ID="duck_scheduled_restart"
 
 log_message() {
     local msg="$1"
@@ -18,6 +19,26 @@ log_message() {
     
     local timestamp=$(date "+%Y-%m-%d %H:%M:%S")
     echo "[$timestamp] [duck] [$level] $msg" >> "$LOG_DIR/duck.log"
+}
+
+setup_scheduled_restart() {
+	local scheduled_restart
+	local cron_expression
+	
+	config_get_bool scheduled_restart "config" "scheduled_restart" "0"
+	config_get cron_expression "config" "cron_expression" ""
+	
+	sed -i "/${CRON_ID}/d" /etc/crontabs/root 2>/dev/null
+	
+	if [ "$scheduled_restart" -eq "1" ] && [ -n "$cron_expression" ]; then
+		echo "$cron_expression /etc/init.d/duck restart #${CRON_ID}" >> /etc/crontabs/root
+		log_message "Scheduled restart expression: $cron_expression"
+		/etc/init.d/cron restart
+	elif [ "$scheduled_restart" -eq "1" ] && [ -z "$cron_expression" ]; then
+		log_message "Scheduled restart is enabled but expression is invalid" "warn"
+	elif [ "$scheduled_restart" -eq "0" ]; then
+		log_message "Scheduled restart is disabled"
+	fi
 }
 
 start_service() {
@@ -35,6 +56,8 @@ start_service() {
 	
 	local subscribe_url
 	config_get subscribe_url "config" "subscribe_url" ""
+
+	setup_scheduled_restart
 
 	if [ "$delay" -gt 0 ]; then
 		log_message "Starting after $delay seconds..."
@@ -93,10 +116,16 @@ start_service() {
 stop_service() {
 	log_message "Stopping service"
 	rm -rf "$LOG_DIR"
+	
+	sed -i "/${CRON_ID}/d" /etc/crontabs/root 2>/dev/null
+	/etc/init.d/cron restart
 }
 
 service_triggers() {
 	procd_add_reload_trigger "$CONF"
+	
+	config_load "$CONF"
+	setup_scheduled_restart
 }
 
 hot_reload() {

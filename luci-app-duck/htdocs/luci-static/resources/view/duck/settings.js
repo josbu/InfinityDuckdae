@@ -68,6 +68,14 @@ return view.extend({
 
 		o = s.option(form.Flag, 'enabled', _('Enable'));
 		
+		o = s.option(form.Flag, 'scheduled_restart', _('Scheduled Restart'));
+		o.rmempty = false;
+		
+		o = s.option(form.Value, 'cron_expression', _('Cron Expression'));
+		o.depends('scheduled_restart', '1');
+		o.placeholder = '0 4 * * *';
+		o.rmempty = true;
+		
 		o = s.option(form.Value, 'delay', _('Startup Delay'),
 			_('Startup delay in seconds.'));
 		o.datatype = 'uinteger';

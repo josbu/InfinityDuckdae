@@ -14,6 +14,7 @@ This project is based on [luci-app-dae](https://github.com/immortalwrt/luci/tree
 - Simple config file validation
 - Fetch config from remote
 - Startup deplay
+- Schedule restart
 
 ## Install
 1. Add feed

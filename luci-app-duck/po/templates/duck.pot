@@ -31,7 +31,7 @@ msgstr ""
 msgid "Collecting data…"
 msgstr ""
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:77
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:85
 msgid "Configration file"
 msgstr ""
 
@@ -46,6 +46,10 @@ msgstr ""
 
 #: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/config.js:40
 msgid "Configuration validation failed!"
+msgstr ""
+
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:74
+msgid "Cron Expression"
 msgstr ""
 
 #: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:69
@@ -116,11 +120,11 @@ msgstr ""
 msgid "Log is empty."
 msgstr ""
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:86
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:94
 msgid "Max log backups"
 msgstr ""
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:91
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:99
 msgid "Max log size"
 msgstr ""
 
@@ -134,6 +138,10 @@ msgstr ""
 
 #: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:381
 msgid "Refresh every %s seconds."
+msgstr ""
+
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:71
+msgid "Scheduled Restart"
 msgstr ""
 
 #: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:320
@@ -150,15 +158,15 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:71
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:79
 msgid "Startup Delay"
 msgstr ""
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:72
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:80
 msgid "Startup delay in seconds."
 msgstr ""
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:82
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:90
 msgid "Subscription URL"
 msgstr ""
 
@@ -166,17 +174,17 @@ msgstr ""
 msgid "Success"
 msgstr ""
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:83
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:91
 msgid ""
 "The URL to download configuration from when starting/restarting. Will use "
 "existing config if download fails."
 msgstr ""
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:87
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:95
 msgid "The maximum number of old log files to retain."
 msgstr ""
 
-#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:92
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:100
 msgid "The maximum size in megabytes of the log file before it gets rotated."
 msgstr ""
 
