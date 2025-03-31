@@ -17,8 +17,34 @@ start_service() {
 	config_get_bool enabled "config" "enabled" "0"
 	[ "$enabled" -eq "1" ] || return 1
 
+	local delay
+	config_get delay "config" "delay" "0"
+	
 	local config_file
 	config_get config_file "config" "config_file" "/etc/duck/config.dae"
+	
+	local subscribe_url
+	config_get subscribe_url "config" "subscribe_url" ""
+	
+	if [ -n "$subscribe_url" ]; then
+		mkdir -p /etc/duck
+		[ -f "$config_file" ] && cp -f "$config_file" "/etc/duck/config.dae.bak"
+		
+		logger -t duck "Downloading configuration from $subscribe_url"
+		if ! curl -s -m 5 --retry 2 -f -o "$config_file.tmp" "$subscribe_url"; then
+			logger -t duck "Failed to download configuration, using existing one"
+			rm -f "$config_file.tmp"
+		else
+			if "$PROG" validate -c "$config_file.tmp"; then
+				mv -f "$config_file.tmp" "$config_file"
+				logger -t duck "Successfully updated configuration"
+			else
+				logger -t duck "Downloaded configuration is invalid, using existing one"
+				rm -f "$config_file.tmp"
+				mv -f "/etc/duck/config.dae.bak" "$config_file"
+			fi
+		fi
+	fi
 
 	"$PROG" validate -c "$config_file" || return 1
 
@@ -26,6 +52,12 @@ start_service() {
 	config_get log_maxbackups "config" "log_maxbackups" "1"
 	config_get log_maxsize "config" "log_maxsize" "1"
 
+	if [ "$delay" -gt 0 ]; then
+		logger -t duck "Delaying start for $delay seconds..."
+		sleep "$delay"
+	fi
+
+	mkdir -p "$LOG_DIR"
 	procd_open_instance "$CONF"
 	procd_set_param command "$PROG" run
 	procd_append_param command --config "$config_file"

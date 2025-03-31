@@ -67,11 +67,21 @@ return view.extend({
 		s = m.section(form.NamedSection, 'config', 'duck');
 
 		o = s.option(form.Flag, 'enabled', _('Enable'));
+		
+		o = s.option(form.Value, 'delay', _('Start Delay'),
+			_('Delay start by the specified number of seconds'));
+		o.datatype = 'uinteger';
+		o.placeholder = '0';
+		o.default = '0';
 
 		o = s.option(form.Value, 'config_file', _('Configration file'));
 		o.default = '/etc/duck/config.dae';
 		o.rmempty = false;
 		o.readonly = true;
+		
+		o = s.option(form.Value, 'subscribe_url', _('Subscription URL'),
+			_('The URL to download configuration from when starting/restarting. Will use existing config if download fails.'));
+		o.rmempty = true;
 
 		o = s.option(form.Value, 'log_maxbackups', _('Max log backups'),
 			_('The maximum number of old log files to retain.'));

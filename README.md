@@ -12,6 +12,8 @@ This project is based on [luci-app-dae](https://github.com/immortalwrt/luci/tree
 - Reversed log order with scrollbar
 - Log highlighting and filtering
 - Simple config file validation
+- Fetch config from remote
+- Startup deplay
 
 ## Install
 1. Add feed
