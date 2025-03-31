@@ -71,6 +71,7 @@ And more...
 ## Screenshots
 <details>
  <p>
+  <img src="img/ss3.png" alt="settings">
   <img src="img/ss1.png" alt="config">
   <img src="img/ss2.png" alt="log">
  </p>
