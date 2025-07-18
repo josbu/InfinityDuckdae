@@ -87,8 +87,12 @@ return view.extend({
 		o.rmempty = false;
 		o.readonly = true;
 		
+		o = s.option(form.Flag, 'subscribe_enabled', _('Enable Subscription Download'));
+		o.rmempty = false;
+		
 		o = s.option(form.Value, 'subscribe_url', _('Subscription URL'),
 			_('The URL to download configuration from when starting/restarting. Will use existing config if download fails.'));
+		o.depends('subscribe_enabled', '1');
 		o.rmempty = true;
 
 		o = s.option(form.Value, 'log_maxbackups', _('Max log backups'),

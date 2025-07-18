@@ -56,6 +56,10 @@ msgstr ""
 msgid "Enable"
 msgstr ""
 
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:90
+msgid "Subscription Download"
+msgstr ""
+
 #: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:297
 msgid "Error"
 msgstr ""

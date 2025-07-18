@@ -63,6 +63,10 @@ msgstr "Cron 表达式"
 msgid "Enable"
 msgstr "启用"
 
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:90
+msgid "Enable Subscription Download"
+msgstr "订阅下载"
+
 #: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:297
 msgid "Error"
 msgstr ""
