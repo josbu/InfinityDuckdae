@@ -143,6 +143,10 @@ msgstr "最大日志大小"
 msgid "NOT RUNNING"
 msgstr "未运行"
 
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:350
+msgid "Pause Refresh"
+msgstr "暂停刷新"
+
 #: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:31
 msgid "RUNNING"
 msgstr "运行中"
@@ -150,6 +154,10 @@ msgstr "运行中"
 #: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:381
 msgid "Refresh every %s seconds."
 msgstr "每 %s 秒刷新。"
+
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:350
+msgid "Resume Refresh"
+msgstr "恢复刷新"
 
 #: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:71
 msgid "Scheduled Restart"

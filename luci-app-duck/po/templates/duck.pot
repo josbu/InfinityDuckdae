@@ -136,12 +136,20 @@ msgstr ""
 msgid "NOT RUNNING"
 msgstr ""
 
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:339
+msgid "Pause Refresh"
+msgstr ""
+
 #: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:31
 msgid "RUNNING"
 msgstr ""
 
 #: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:381
 msgid "Refresh every %s seconds."
+msgstr ""
+
+#: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/log.js:350
+msgid "Resume Refresh"
 msgstr ""
 
 #: applications/luci-app-duck/htdocs/luci-static/resources/view/duck/settings.js:71

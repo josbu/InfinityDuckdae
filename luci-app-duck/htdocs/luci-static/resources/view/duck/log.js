@@ -163,6 +163,7 @@ return view.extend({
 		var originalLogContent = '';
 		var logEntriesCache = null;
 		var debounceTimeout = null;
+		var isPaused = false;
 
 		function debounce(func, wait) {
 			return function (...args) {
@@ -184,6 +185,10 @@ return view.extend({
 		}
 
 		poll.add(L.bind(function () {
+			if (isPaused) {
+				return Promise.resolve();
+			}
+			
 			return fs.read_direct('/var/log/duck/duck.log', 'text')
 				.then(function (content) {
 					var contentLines = content.trim().split(/\r?\n/);
@@ -339,6 +344,22 @@ return view.extend({
 
 		clearLogButton.addEventListener('click', clearLog);
 
+		var refreshToggleButton = E('button', {
+			'id': 'refreshToggleButton',
+			'class': 'cbi-button cbi-button-neutral',
+		}, '⏸ ' + _('Pause Refresh'));
+
+		refreshToggleButton.addEventListener('click', function () {
+			isPaused = !isPaused;
+			if (isPaused) {
+				refreshToggleButton.innerHTML = '▶ ' + _('Resume Refresh');
+				refreshToggleButton.className = 'cbi-button cbi-button-positive';
+			} else {
+				refreshToggleButton.innerHTML = '⏸ ' + _('Pause Refresh');
+				refreshToggleButton.className = 'cbi-button cbi-button-neutral';
+			}
+		});
+
 		var filterInput = E('input', {
 			'id': 'filterInput',
 			'type': 'text',
@@ -367,7 +388,8 @@ return view.extend({
 				E('div', { 'class': 'controls-container' }, [
 					E('div', { 'class': 'controls-row' }, [
 						filterInput,
-						clearFilterButton
+						clearFilterButton,
+						refreshToggleButton
 					]),
 					E('div', { 'class': 'controls-row' }, [
 						scrollUpButton,
